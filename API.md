@@ -1,13 +1,12 @@
+# interface
+
 ```javascript
 {
     "browser" : {
-        "name" : "firefox|chrome|ie|safari|opera|edge|360browser|qqbrowser|sogou|lbbrowser|baidu|uc",
+        "name" : "chrome|firefox|safari|opera|internet-explorer|edge|qq-browser|lb-browser|uc-browser|sogou-explorer|qihu-browser",
         "version": "x.x.x"
     },
-    "os" : {
-        "name" : "windows|linux|android|ios|macos|osx",
-        "version" : "x.x.x"
-    },
-    "hardware" : "iphone|ipad|"
+    "os" : "windows|linux|android|ios|macos"
 }
 ```
+
