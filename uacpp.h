@@ -18,30 +18,21 @@
 using std::string;
 using std::ostringstream;
 
-struct SemanticVersion {
-    SemanticVersion() {
-        major = minor = patch = 0;
-    }
+struct UAResult {
+    UAResult() : version(0) {}
     string str() {
         ostringstream oss;
-        oss << major << "." << minor << "." << patch;
+        oss << "UAResult {name:" << name << ", os:" << os << ", version:" << version << "}";
         return oss.str();
     }
-
-    uint16_t major;
-    uint16_t minor;
-    uint16_t patch;
-};
-
-struct UAResult {
-    string          browser;
-    SemanticVersion version;
-    string          os;
+    string   name;
+    uint16_t version;
+    string   os;
 };
 
 class UACpp {
 public:
-    static UAResult Parse(const string &ua);
+    static int Parse(const string &ua, UAResult& result);
 };
 
 #endif /*UACPP_H_INCLUDED*/
