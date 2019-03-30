@@ -10,8 +10,8 @@
 .PHONY: all build test install doc
 
 a: uacpp.cpp  main.cpp uacpp.h
-	g++ -std=c++11 $^ -o $@
-	./a
+	@g++ -std=c++11 $^ -o $@
+	@./a
 
 clean:
 	rm -f ./a

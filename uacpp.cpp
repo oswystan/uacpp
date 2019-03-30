@@ -16,6 +16,60 @@
 
 typedef int(*UAParser)(const string&, UAResult&);
 
+struct WindowsVersionMapper {
+    string no;
+    string version;
+};
+
+static WindowsVersionMapper win_mapper[] = {
+    {"5.0" , "2000" },
+    {"5.1" , "xp"   },
+    {"5.2" , "2003" },
+    {"6.0" , "vista"},
+    {"6.1" , "7"    },
+    {"6.2" , "8"    },
+    {"6.3" , "8.1"  },
+    {"10.0", "10"   },
+};
+
+static const char* windowsMapper(const string& in) {
+    for (auto &one : win_mapper) {
+        if (one.no == in) {
+            return one.version.c_str();
+        }
+    }
+    return nullptr;
+}
+
+static int browserInternetExplorer(const string& ua, UAResult& result) {
+    static std::regex ex(".*MSIE\\s(\\d+(?:\\.\\d+));[\\s\\S]+Windows\\sNT\\s(\\d+(?:\\.\\d+));.*");
+    std::smatch sm;
+    std::regex_match(ua, sm, ex);
+    if (sm.size() == 3) {
+        result.name = "ie";
+        result.version = std::stoi(sm[1]);
+        return 0;
+    }
+    static std::regex ex2(".*Windows\\sNT\\s(\\d+(?:\\.\\d+));[\\s\\S]+Trident\\/\\d+\\.\\d+;[\\s\\S]+rv:(\\d+(?:\\.\\d+)).*");
+    std::regex_match(ua, sm, ex2);
+    if (sm.size() == 3) {
+        result.name = "ie";
+        result.version = std::stoi(sm[2]);
+        return 0;
+    }
+
+    return -1;
+}
+static int browserEdge(const string& ua, UAResult& result) {
+    static std::regex ex(".*Windows\\sNT\\s(\\d+(?:\\.\\d+)+);[\\s\\S]+Edge\\/(\\d+(?:\\.\\d+))$");
+    std::smatch sm;
+    std::regex_match(ua, sm, ex);
+    if (sm.size() != 3) { return -1; }
+
+    result.name = "edge";
+    result.version = std::stoi(sm[2]);
+    return 0;
+}
 static int browserFirefox(const string& ua, UAResult& result) {
     static std::regex ex(".*(Firefox|FxiOS)\\/(\\d+(?:\\.\\w+)+).*");
     std::smatch sm;
@@ -78,7 +132,6 @@ static int osWindows(const string& ua, UAResult& result) {
     std::smatch sm;
     std::regex_match(ua, sm, ex);
     if (sm.size() != 2) { return -1; }
-
     result.os = "windows";
     return 0;
 }
@@ -93,6 +146,8 @@ static int osLinux(const string& ua, UAResult& result) {
 }
 
 static UAParser browserParsers[] = {
+    browserInternetExplorer,
+    browserEdge,
     browserChrome,
     browserSafari,
     browserFirefox,

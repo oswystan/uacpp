@@ -100,6 +100,21 @@ UAData allUA[] = {
         .name = "firefox",
         .os = "macos",
         .version = 52
+    }, {
+        .ua = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; SV1)",
+        .name = "ie",
+        .os = "windows",
+        .version = 6
+    }, {
+        .ua = "Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; .NET4.0E; Shuame; rv:11.0) like Gecko",
+        .name = "ie",
+        .os = "windows",
+        .version = 11
+    }, {
+        .ua = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36 Edge/15.15063",
+        .name = "edge",
+        .os = "windows",
+        .version = 15
     },
 };
 
